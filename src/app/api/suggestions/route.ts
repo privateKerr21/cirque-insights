@@ -2,7 +2,7 @@ import { createClient } from "@/lib/supabase-server";
 import { generateContent } from "@/lib/gemini";
 import { PROMPT_TEMPLATES } from "@/lib/constants";
 import { NextResponse } from "next/server";
-import { format, subDays, startOfMonth, endOfMonth, eachDayOfInterval } from "date-fns";
+import { format, startOfMonth, endOfMonth, eachDayOfInterval } from "date-fns";
 
 export const dynamic = "force-dynamic";
 
@@ -13,24 +13,6 @@ export async function GET() {
   const { data: settings } = await supabase.from("brand_settings").select("key, value");
   const brand: Record<string, string> = {};
   settings?.forEach((s) => (brand[s.key] = s.value));
-
-  // Get recent metrics (last 14 days)
-  const twoWeeksAgo = format(subDays(new Date(), 14), "yyyy-MM-dd");
-  const { data: insights } = await supabase
-    .from("insights")
-    .select("*")
-    .gte("date", twoWeeksAgo)
-    .order("date", { ascending: true });
-
-  let recentMetrics = "No recent metrics available.";
-  if (insights && insights.length > 0) {
-    recentMetrics = insights
-      .map(
-        (i) =>
-          `${i.date} (${i.platform}): ${i.followers} followers, ${i.reach} reach, ${i.engagement_rate}% engagement, ${i.likes} likes`
-      )
-      .join("\n");
-  }
 
   // Find calendar gaps this month
   const monthStart = startOfMonth(new Date());
@@ -53,7 +35,7 @@ export async function GET() {
       : "All days this month have scheduled content.";
 
   try {
-    const prompt = PROMPT_TEMPLATES.suggestions(brand, recentMetrics, calendarGaps);
+    const prompt = PROMPT_TEMPLATES.suggestions(brand, calendarGaps);
     const result = await generateContent(prompt);
 
     await supabase.from("ai_generations").insert({

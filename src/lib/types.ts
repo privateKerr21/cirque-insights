@@ -3,22 +3,6 @@ export type DraftStatus = "draft" | "review" | "approved" | "posted";
 export type ContentType = "post" | "reel" | "story" | "carousel" | "tiktok";
 export type GenerationType = "caption" | "hashtags" | "ideas" | "post_plan";
 
-export interface Insight {
-  id: string;
-  platform: Platform;
-  date: string;
-  followers: number;
-  reach: number;
-  impressions: number;
-  engagement_rate: number;
-  likes: number;
-  comments: number;
-  shares: number;
-  saves: number;
-  profile_visits: number;
-  created_at: string;
-}
-
 export interface Draft {
   id: string;
   title: string;
@@ -60,12 +44,3 @@ export interface BrandSetting {
   value: string;
 }
 
-export interface SyncLog {
-  id: string;
-  user_id: string;
-  platform: string;
-  records_synced: number;
-  status: "success" | "error";
-  error_message: string | null;
-  created_at: string;
-}

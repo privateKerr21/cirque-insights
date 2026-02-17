@@ -6,22 +6,16 @@ import { usePathname, useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase-browser";
 import { cn } from "@/lib/utils";
 import {
-  LayoutDashboard,
-  BarChart3,
+  CalendarDays,
   Sparkles,
   FileText,
-  CalendarDays,
-  Settings,
   LogOut,
 } from "lucide-react";
 
 const links = [
-  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/insights", label: "Insights", icon: BarChart3 },
+  { href: "/calendar", label: "Calendar", icon: CalendarDays },
   { href: "/generate", label: "Generate", icon: Sparkles },
   { href: "/drafts", label: "Drafts", icon: FileText },
-  { href: "/calendar", label: "Calendar", icon: CalendarDays },
-  { href: "/settings", label: "Settings", icon: Settings },
 ];
 
 export default function Sidebar() {

@@ -3,18 +3,6 @@ export const DRAFT_STATUSES = ["draft", "review", "approved", "posted"] as const
 export const CONTENT_TYPES = ["post", "reel", "story", "carousel", "tiktok"] as const;
 export const GENERATION_TYPES = ["caption", "hashtags", "ideas", "post_plan"] as const;
 
-export const METRICS = [
-  { key: "followers", label: "Followers", color: "#6366f1" },
-  { key: "reach", label: "Reach", color: "#8b5cf6" },
-  { key: "impressions", label: "Impressions", color: "#a78bfa" },
-  { key: "engagement_rate", label: "Engagement Rate", color: "#c084fc" },
-  { key: "likes", label: "Likes", color: "#e879f9" },
-  { key: "comments", label: "Comments", color: "#f472b6" },
-  { key: "shares", label: "Shares", color: "#fb7185" },
-  { key: "saves", label: "Saves", color: "#f87171" },
-  { key: "profile_visits", label: "Profile Visits", color: "#fb923c" },
-] as const;
-
 export const STATUS_COLORS: Record<string, string> = {
   draft: "bg-gray-100 text-gray-700",
   review: "bg-yellow-100 text-yellow-700",
@@ -89,18 +77,16 @@ For each day, provide:
 
 Format as a structured daily plan.`,
 
-  suggestions: (brand: Record<string, string>, recentMetrics: string, calendarGaps: string) =>
-    `You are a social media strategist for ${brand.name || "a premium brand"}.
+  suggestions: (brand: Record<string, string>, calendarGaps: string) =>
+    `You are a social media content strategist for ${brand.name || "a premium brand"}.
 Brand voice: ${brand.voice || "premium, aspirational, authentic"}
+Target audience: ${brand.audience || "outdoor enthusiasts"}
 Content pillars: ${brand.content_pillars || "adventure, quality, style"}
 
-Based on these recent performance metrics:
-${recentMetrics}
-
-And these gaps in the content calendar:
+Here are the current gaps in the content calendar:
 ${calendarGaps}
 
-Provide 3-5 actionable suggestions to improve social media performance.
-Be specific and reference the data. Keep each suggestion to 2-3 sentences.
+Provide 3-5 actionable content suggestions to fill calendar gaps and maintain a consistent posting schedule.
+Consider the brand voice, target audience, and content pillars. Keep each suggestion to 2-3 sentences.
 Format as a numbered list.`,
 };
